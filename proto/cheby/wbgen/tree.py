@@ -18,7 +18,7 @@ class Node(object):
 
     def get_hdl_prefix(self):
         if self.hdl_prefix is None:
-            return self.prefix.lower() if self.prefix else None
+            return self.prefix if self.prefix else None
         else:
             return self.hdl_prefix
 

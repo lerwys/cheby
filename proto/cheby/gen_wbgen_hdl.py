@@ -19,7 +19,7 @@ def get_wbgen(n, name, default=None):
     return n.get_extension('x_wbgen', name, default)
 
 def get_hdl_prefix(n):
-    return get_wbgen(n, 'hdl_prefix', n.name.lower() if n.name is not None else None)
+    return get_wbgen(n, 'hdl_prefix', n.name if n.name is not None else None)
 
 def is_wbgen_fifo(n):
     return get_wbgen(n, 'kind', None) == 'fifo'
@@ -833,7 +833,7 @@ def expand_irqs(root, module, bus, isig):
     idx = 0
     for irq in irqs:
         gi = Code()
-        pfx = irq['name'].lower()
+        pfx = irq['name']
         p = HDLPort("irq_{}_i".format(pfx))
         gi.ports.append(p)
         g.asgn_code.append(HDLAssign(HDLIndex(inp_vec, idx), p))
