@@ -403,7 +403,10 @@ def expand_bit(f, reg, name, isig, bus):
         size = None
     else:
         size = f.c_rwidth
-    port_type = {'SLV': 'L', 'BIT': 'L', 'UNSIGNED': 'U', 'SIGNED': 'S'}.get(typ, 'L')
+    port_type = {'SLV': 'L',
+                 'BIT': 'L',
+                 'UNSIGNED': 'U',
+                 'SIGNED': 'S'}.get(typ, 'L')
     type_name = {'SLV': 'std_logic_vector',
                  'UNSIGNED': 'unsigned',
                  'SIGNED': 'signed'}.get(typ, typ)
