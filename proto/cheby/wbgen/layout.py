@@ -18,6 +18,9 @@ def align_offset(offset, algn):
 
 
 def layout_anyreg(r, offset):
+    # Use user-supplied offset if available
+    if r.addr_base is not None:
+        offset = r.addr_base
     # Align
     if r.align is not None:
         offset = align_offset(offset, r.align)
