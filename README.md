@@ -1,5 +1,7 @@
 # Cheby
 
+[![Build Status](https://travis-ci.org/lerwys/cheby.svg)](https://travis-ci.org/lerwys/cheby)
+
 The Cheby project aims at defining a file format to describe the HW/SW
 interface (the memory map), and a set of tools to generate HDL,
 drivers, documentation... from these files.
