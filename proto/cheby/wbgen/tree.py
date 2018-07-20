@@ -12,7 +12,7 @@ class Node(object):
 
     def get_c_prefix(self):
         if self.c_prefix is None:
-            return self.prefix.upper() if self.prefix else None
+            return self.prefix if self.prefix else None
         else:
             return self.c_prefix
 
