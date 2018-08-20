@@ -4,6 +4,7 @@ import os.path
 import time
 import argparse
 import cheby.parser
+import cheby.verilog_parser
 import cheby.pprint as pprint
 import cheby.sprint as sprint
 import cheby.cprint as cprint
@@ -18,6 +19,7 @@ import cheby.gen_name as gen_name
 import cheby.gen_gena_memmap as gen_gena_memmap
 import cheby.gen_gena_regctrl as gen_gena_regctrl
 import cheby.gen_wbgen_hdl as gen_wbgen_hdl
+import cheby.gen_wb_wrapper_hdl as gen_wb_wrapper_hdl
 
 
 def decode_args():
@@ -48,12 +50,18 @@ def decode_args():
                          help='generate Gena RegCtrl file')
     aparser.add_argument('--gen-wbgen-vhdl', action='store_true',
                          help='generate wbgen VHDL')
+    aparser.add_argument('--gen-verilog-wb-wrapper', action='store_true',
+                         help='generate verilog Wishbone wrapper')
+    aparser.add_argument('--verilog-in-file', default='',
+                         help='Verilog input file for wishbone wrapper')
+    aparser.add_argument('--verilog-mod-name', default='',
+                         help='Verilog input module name for wishbone wrapper')
     aparser.add_argument('FILE', nargs='+')
 
     return aparser.parse_args()
 
 
-def handle_file(args, filename):
+def handle_file(args, filename, vfilename, vname):
     t = cheby.parser.parse_yaml(filename)
 
     layout.layout_cheby(t)
@@ -120,13 +128,18 @@ def handle_file(args, filename):
             print_vhdl.print_vhdl(sys.stdout, h)
         if args.gen_verilog:
             print_verilog.print_verilog(sys.stdout, h)
+    if args.gen_verilog_wb_wrapper:
+        v = cheby.verilog_parser.parse_verilog(vfilename)
+        gen_name.gen_name_root(t)
+        h = gen_wb_wrapper_hdl.generate_wb_wrapper_hdl(t, v, vname)
+        print_verilog.print_verilog(sys.stdout, h)
 
 
 def main():
     args = decode_args()
     for f in args.FILE:
         try:
-            handle_file(args, f)
+            handle_file(args, f, args.verilog_in_file, args.verilog_mod_name)
         except cheby.parser.ParseException as e:
             sys.stderr.write("{}:parse error: {}\n".format(f, e.msg))
             sys.exit(2)
