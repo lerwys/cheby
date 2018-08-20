@@ -22,5 +22,10 @@ setup(
 
     install_requires=[
         'pyyaml',
+        'hdlparse'
     ],
+    dependency_links=[
+        "https://github.com/lerwys/hdlparse.git@master#egg=hdlparse-master"
+        "git+ssh://git@github.com/lerwys/hdlparse.git@master#egg=hdlparse-master"
+    ]
 )
