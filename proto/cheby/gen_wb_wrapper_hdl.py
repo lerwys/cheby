@@ -1354,6 +1354,9 @@ def expand_hdl(root, mod, vname):
     # Create/Add the bus to top-module
     expand_wishbone(root, m)
 
+    # Patch clk name
+    root.h_bus['clk'].name = 'clk_sys_i'
+
     wb_slave_name = gen_wb_slave_name(vname)
     # Construct Wishbone slave module
     wb_slave_inst = HDLInstance(wb_slave_name + "_inst", wb_slave_name)
@@ -1370,9 +1373,6 @@ def expand_hdl(root, mod, vname):
             m.ports.append(HDLPort(mod_sig_name, size=s.size if s.size > 1 else None,
                                    typ='S' if s.sign=='signed' else 'L',
                                    dir=comp_mode_map[s.mode]))
-
-    # Patch clk name
-    root.h_bus['clk'].name = 'clk_sys_i'
 
     ## Internal signals
     addr_width = root.c_blk_bits + root.c_sel_bits - root.c_addr_word_bits
