@@ -45,6 +45,9 @@ def get_hdl_prefix(n):
 def gen_mod_name(n):
     return n + '_wb'
 
+def gen_wb_slave_name(n):
+    return n + '_csr'
+
 def is_wbgen_fifo(n):
     return get_wbgen(n, 'kind', None) == 'fifo'
 
@@ -1351,8 +1354,9 @@ def expand_hdl(root, mod, vname):
     # Create/Add the bus to top-module
     expand_wishbone(root, m)
 
+    wb_slave_name = gen_wb_slave_name(vname)
     # Construct Wishbone slave module
-    wb_slave_inst = HDLInstance(m.name + "_inst", m.name)
+    wb_slave_inst = HDLInstance(wb_slave_name + "_inst", wb_slave_name)
     m.stmts.append(wb_slave_inst)
     for p in m.ports:
         wb_slave_inst.conns.append((p.name, p))
