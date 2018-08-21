@@ -42,6 +42,9 @@ def get_wbgen(n, name, default=None):
 def get_hdl_prefix(n):
     return get_wbgen(n, 'hdl_prefix', n.name if n.name is not None else None)
 
+def gen_mod_name(n):
+    return n + '_wb'
+
 def is_wbgen_fifo(n):
     return get_wbgen(n, 'kind', None) == 'fifo'
 
@@ -1337,7 +1340,8 @@ def expand_hdl(root, mod, vname):
     assert isinstance(root, tree.Root)
     layout_wbgen(root)
     m = gen_hdl_header(root)
-    m.name = get_wbgen(root, 'hdl_entity', root.name)
+    m.name = gen_mod_name(vname)
+    #get_wbgen(root, 'hdl_entity', root.name)
 
     # Get dictionary from module list, as key being the name of the module
     mod_names = [module.name for module in mod]
