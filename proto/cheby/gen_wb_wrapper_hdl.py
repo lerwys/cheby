@@ -1473,6 +1473,8 @@ def expand_hdl(root, mod, vname):
     # Add clock ports
     for c in clk_sigs:
         wb_slave_inst.conns.append((isig[c].name, isig[c]))
+        # Expose all clocks to the top-module
+        m.ports.append(isig[c])
     # Regs
     for r in root.children:
         if isinstance(r, tree.Reg) \
