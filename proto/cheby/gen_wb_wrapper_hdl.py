@@ -1486,10 +1486,7 @@ def expand_hdl(root, mod, vname):
                 wb_slave_inst.conns.append((port.name, wb_slave_isigs[port.name]))
                 # Connect port directly to wrapped module if it's a reg
                 mod_port_name = re.sub(mode_suffix_map[port.dir], '', re.sub(get_hdl_prefix(root) + '_', '', port.name))
-                # FIXME. dumb loop
-                for vmod_port in vmod.ports:
-                    if mod_port_name==vmod_port.name:
-                        wrap_inst.conns.append((mod_port_name, wb_slave_isigs[port.name]))
+                wrap_inst.conns.append((mod_port_name, wb_slave_isigs[port.name]))
         elif is_wbgen_fifo(r):
             for port in r.code.ports:
                 port_name_int = port.name.replace('_i', '').replace('_o', '').replace('_b', '')
