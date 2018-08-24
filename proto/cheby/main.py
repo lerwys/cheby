@@ -141,7 +141,7 @@ def handle_file(args, filename, vfilename, vname):
            date=time.strftime("%a %b %d %X %Y")))
             print_vhdl.style = 'wbgen'
             print_vhdl.print_vhdl(sys.stdout, h)
-    if args.gen_vhdl or args.gen_verilog:
+    if not args.gen_wbgen and (args.gen_vhdl or args.gen_verilog):
         gen_name.gen_name_root(t)
         h = gen_hdl.generate_hdl(t)
         if args.gen_vhdl:
