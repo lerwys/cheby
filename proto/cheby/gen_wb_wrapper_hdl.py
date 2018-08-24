@@ -1512,7 +1512,7 @@ def expand_hdl(root, mod, vname):
                 mod_port_name = re.sub(mode_suffix_map[port.dir], '', re.sub(get_hdl_prefix(root) + '_', '', port.name))
                 if re.search(RAM_ADDR_IN_PORT_SUFFIX + '$', port.name):
                     wrap_inst.conns.append((mod_port_name, wb_slave_isigs[port.name]))
-                if re.search(RAM_DATA_OUT_PORT_SUFFIX + '$', port.name):
+                elif re.search(RAM_DATA_OUT_PORT_SUFFIX + '$', port.name):
                     wrap_inst.conns.append((re.sub('_data', '', mod_port_name), wb_slave_isigs[port.name]))
                 elif re.search(RAM_RD_IN_PORT_SUFFIX + '$', port.name):
                     # Just assign default value to wb_slave
