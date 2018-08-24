@@ -48,8 +48,8 @@ def decode_args():
                          help='generate Gena MemMap file')
     aparser.add_argument('--gen-gena-regctrl', action='store_true',
                          help='generate Gena RegCtrl file')
-    aparser.add_argument('--gen-wbgen-vhdl', action='store_true',
-                         help='generate wbgen VHDL')
+    aparser.add_argument('--gen-wbgen', action='store_true',
+                         help='generate wbgen')
     aparser.add_argument('--gen-verilog-wb-wrapper', action='store_true',
                          help='generate verilog Wishbone wrapper')
     aparser.add_argument('--verilog-in-file', default='',
@@ -101,7 +101,7 @@ def handle_file(args, filename, vfilename, vname):
             gen_gena_memmap.gen_gena_memmap(t)
         h = gen_gena_regctrl.gen_gena_regctrl(t)
         print_vhdl.print_vhdl(sys.stdout, h)
-    if args.gen_wbgen_vhdl:
+    if args.gen_wbgen:
         h = gen_wbgen_hdl.expand_hdl(t)
         (basename, _) = os.path.splitext(os.path.basename(filename))
         if args.gen_verilog:
